@@ -11,16 +11,20 @@ def player_move(position, die_roll, option):
     if option == "No Play":
         return position
     elif option == "Ladder":
-        return position + die_roll
+        new_position = position + die_roll
+        # UC 5: Stay at previous position if exceeding 100
+        if new_position > 100:
+            return position
+        return new_position
     elif option == "Snake":
         new_position = position - die_roll
-        # UC 4: Restart from 0 if below 0
         if new_position < 0:
             return 0
         return new_position
 
-position = 2
+# UC 5: Test near 100
+position = 98
 die_roll = roll_die()
-option = "Snake"  
+option = "Ladder"  # Force ladder for testing
 new_position = player_move(position, die_roll, option)
-print(f"UC 4: Start Position = {position}, Die Roll = {die_roll}, Option = {option}, New Position = {new_position}")
+print(f"UC 5: Start Position = {position}, Die Roll = {die_roll}, Option = {option}, New Position = {new_position}")

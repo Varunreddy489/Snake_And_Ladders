@@ -1,1 +1,1 @@
-print("hello world")
+position =0

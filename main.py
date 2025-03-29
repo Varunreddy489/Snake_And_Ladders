@@ -21,20 +21,39 @@ def player_move(position, die_roll, option):
             return 0
         return new_position
 
-# UC 6: Single-player game with reporting
-position = 0
+# UC 7: Two-player game
+player1_pos = 0
+player2_pos = 0
 dice_rolls = 0
-position_history = [position]
+player1_history = [player1_pos]
+player2_history = [player2_pos]
 
-print("UC 6: Single Player Game Starts!")
-while position < 100:
+print("UC 7: Two Player Game Starts!")
+while player1_pos < 100 and player2_pos < 100:
+    # Player 1's turn
     die_roll = roll_die()
     option = get_option()
     dice_rolls += 1
-    old_position = position
-    position = player_move(position, die_roll, option)
-    position_history.append(position)
-    print(f"Roll {dice_rolls}: Dice = {die_roll}, Option = {option}, Position = {old_position} -> {position}")
+    old_pos1 = player1_pos
+    player1_pos = player_move(player1_pos, die_roll, option)
+    player1_history.append(player1_pos)
+    print(f"Roll {dice_rolls} (P1): Dice = {die_roll}, Option = {option}, Position = {old_pos1} -> {player1_pos}")
+    if player1_pos == 100:
+        break
+    
+    # Player 2's turn
+    die_roll = roll_die()
+    option = get_option()
+    dice_rolls += 1
+    old_pos2 = player2_pos
+    player2_pos = player_move(player2_pos, die_roll, option)
+    player2_history.append(player2_pos)
+    print(f"Roll {dice_rolls} (P2): Dice = {die_roll}, Option = {option}, Position = {old_pos2} -> {player2_pos}")
+    if player2_pos == 100:
+        break
 
-print(f"\nGame Over! Reached 100 in {dice_rolls} rolls.")
-print(f"Position History: {position_history}")
+# Report winner
+winner = "Player 1" if player1_pos == 100 else "Player 2"
+print(f"\nGame Over! {winner} wins in {dice_rolls} total rolls!")
+print(f"Player 1 History: {player1_history}")
+print(f"Player 2 History: {player2_history}")

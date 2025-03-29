@@ -12,7 +12,6 @@ def player_move(position, die_roll, option):
         return position
     elif option == "Ladder":
         new_position = position + die_roll
-        # UC 5: Stay at previous position if exceeding 100
         if new_position > 100:
             return position
         return new_position
@@ -22,9 +21,20 @@ def player_move(position, die_roll, option):
             return 0
         return new_position
 
-# UC 5: Test near 100
-position = 98
-die_roll = roll_die()
-option = "Ladder"  # Force ladder for testing
-new_position = player_move(position, die_roll, option)
-print(f"UC 5: Start Position = {position}, Die Roll = {die_roll}, Option = {option}, New Position = {new_position}")
+# UC 6: Single-player game with reporting
+position = 0
+dice_rolls = 0
+position_history = [position]
+
+print("UC 6: Single Player Game Starts!")
+while position < 100:
+    die_roll = roll_die()
+    option = get_option()
+    dice_rolls += 1
+    old_position = position
+    position = player_move(position, die_roll, option)
+    position_history.append(position)
+    print(f"Roll {dice_rolls}: Dice = {die_roll}, Option = {option}, Position = {old_position} -> {position}")
+
+print(f"\nGame Over! Reached 100 in {dice_rolls} rolls.")
+print(f"Position History: {position_history}")
